@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 const customerController = require('../controllers/customerControllers');
 
 // Create a new customer
 router.post('/add', customerController.createCustomer);
 
 // Get all customers
-router.get('/getAll', customerController.getAllCustomers);
+router.get('/getAll',auth, customerController.getAllCustomers);
 
 // Get a customer by ID
 router.get('/get/:id', customerController.getCustomerById);

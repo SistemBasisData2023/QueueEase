@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { pool } = require('../config/config');
 const { v4: uuidv4 } = require('uuid');
+const jwt = require("jsonwebtoken");
 
 const usersController = {
   registerUser: async (req, res) => {
@@ -69,7 +70,16 @@ const usersController = {
       if (!isPasswordCorrect) {
         return res.status(401).json({ message: 'Incorrect password' });
       }
+      const token = jwt.sign(
+        { user_id: user.id},
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "24h",
+        }
+      );
 
+      // save user token
+      user.token = token;
       res.status(200).json(user);
     } catch (error) {
       console.error('Error logging in user', error);

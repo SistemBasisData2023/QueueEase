@@ -12,28 +12,30 @@ function Login() {
     axios.post('http://localhost:5000/users/login', data)
       .then(response => {
         console.log(response.data);
-        // Handle successful login here
+        const token = response.data.token;
+        const typeId = response.data.type_id;
+        const account_id = response.data.account_id;
+        if (token) {
+          localStorage.setItem('token', token);
+          localStorage.setItem('type_id', typeId);
+          localStorage.setItem('account_id', account_id);
+          window.location.href = '/';
+        }
+        if (typeId === 1) {
+          window.location.href = '/admin';
+        }
+        else if (typeId === 2) {
+          window.location.href = '/DeskChoose';
+        }
+        else if (typeId === 3){
+          window.location.href = '/driver';
+        }
+        else {
+          setErrorMessage('Invalid Type Id');
+        }
       })
       .catch(error => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          const statusCode = error.response.status;
-          if (statusCode === 404) {
-            setErrorMessage('User not found');
-          } else if (statusCode === 401) {
-            setErrorMessage('Incorrect password');
-          } else if (statusCode === 500) {
-            setErrorMessage('Internal server error');
-          } else {
-            setErrorMessage('Unknown error occurred');
-          }
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error('Error:', error.request);
-        } else {
-          // Something happened in setting up the request
           console.error('Error:', error.message);
-        }
       });
   };
 
