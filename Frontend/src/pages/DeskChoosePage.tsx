@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../components/Loading';
 
@@ -31,7 +31,7 @@ function DeskChoosePage() {
   };
 
   const handleCheckIn = (deskNo: string) => {
-    const tellerId = localStorage.getItem('account_id');
+    const tellerId = sessionStorage.getItem('account_id');
     if (tellerId) {
       const data = {
         teller_id: tellerId,
@@ -43,7 +43,7 @@ function DeskChoosePage() {
           // Check if check-in was successful
           console.log(response.data);
           if (response.data.success) {
-            localStorage.setItem('desk_no', deskNo);
+            sessionStorage.setItem('desk_no', deskNo);
             window.location.href = '/teller';
           } else {
             // Handle failed check-in

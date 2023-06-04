@@ -16,9 +16,9 @@ function Login() {
         const typeId = response.data.type_id;
         const account_id = response.data.account_id;
         if (token) {
-          localStorage.setItem('token', token);
-          localStorage.setItem('type_id', typeId);
-          localStorage.setItem('account_id', account_id);
+          sessionStorage.setItem('token', token);
+          sessionStorage.setItem('type_id', typeId);
+          sessionStorage.setItem('account_id', account_id);
           window.location.href = '/';
         }
         if (typeId === 1) {

@@ -31,7 +31,7 @@ const usersController = {
 
       // Insert the new user into the Account table
       const registerUserQuery = ` INSERT INTO Account (account_id, username, password, email, full_name, type_id) 
-          VALUES ($1, $2, $3, $4, $5, $6)
+          VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
         `;
       const registerUserValues = [
         account_id,
@@ -41,9 +41,19 @@ const usersController = {
         full_name,
         type_id,
       ];
-      await pool.query(registerUserQuery, registerUserValues);
+      const userResult = await pool.query(registerUserQuery, registerUserValues);
+      const user = userResult.rows[0];
+      const token = jwt.sign(
+        { user_id: user.id},
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "24h",
+        }
+      );
 
-      res.status(201).json({ message: 'User registered successfully' });
+      user.token = token;
+      res.status(200).json(user);
+      
     } catch (error) {
       console.error('Error registering user', error);
       res.status(500).json({ message: 'Internal server error' });
