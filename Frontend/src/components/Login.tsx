@@ -15,10 +15,12 @@ function Login() {
         const token = response.data.token;
         const typeId = response.data.type_id;
         const account_id = response.data.account_id;
+        const full_name = response.data.full_name;
         if (token) {
           sessionStorage.setItem('token', token);
           sessionStorage.setItem('type_id', typeId);
           sessionStorage.setItem('account_id', account_id);
+          sessionStorage.setItem('full_name', full_name);
           window.location.href = '/';
         }
         if (typeId === 1) {
@@ -28,7 +30,7 @@ function Login() {
           window.location.href = '/DeskChoose';
         }
         else if (typeId === 3){
-          window.location.href = '/driver';
+          window.location.href = '/frontdesk';
         }
         else {
           setErrorMessage('Invalid Type Id');

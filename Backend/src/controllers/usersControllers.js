@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const { pool } = require('../config/config');
 const { v4: uuidv4 } = require('uuid');
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const usersController = {
   registerUser: async (req, res) => {
@@ -41,19 +41,17 @@ const usersController = {
         full_name,
         type_id,
       ];
-      const userResult = await pool.query(registerUserQuery, registerUserValues);
-      const user = userResult.rows[0];
-      const token = jwt.sign(
-        { user_id: user.id},
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "24h",
-        }
+      const userResult = await pool.query(
+        registerUserQuery,
+        registerUserValues
       );
+      const user = userResult.rows[0];
+      const token = jwt.sign({ user_id: user.id }, process.env.TOKEN_KEY, {
+        expiresIn: '24h',
+      });
 
       user.token = token;
       res.status(200).json(user);
-      
     } catch (error) {
       console.error('Error registering user', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -80,13 +78,9 @@ const usersController = {
       if (!isPasswordCorrect) {
         return res.status(401).json({ message: 'Incorrect password' });
       }
-      const token = jwt.sign(
-        { user_id: user.id},
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "24h",
-        }
-      );
+      const token = jwt.sign({ user_id: user.id }, process.env.TOKEN_KEY, {
+        expiresIn: '24h',
+      });
 
       // save user token
       user.token = token;

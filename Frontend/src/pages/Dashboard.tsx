@@ -1,8 +1,8 @@
-import Greetings from '../components/Greetings'
-import Navbar from '../components/Navbar'
-import Rectangles from '../components/Rectangles'
-import Sidebar from '../components/Sidebar'
-import Table from '../components/Table'
+import Greetings from '../components/DashboardPage/Greetings'
+import Navbar from '../components/Global/Navbar'
+import Rectangles from '../components/DashboardPage/Rectangles'
+import Sidebar from '../components/DashboardPage/Sidebar'
+import Table from '../components/DashboardPage/Table'
 
 function DashboardPage() {
 

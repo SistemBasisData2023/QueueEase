@@ -57,17 +57,17 @@ const queueController = {
   takeQueueById: async (req, res) => {
     try {
       const { teller_id, desk_id } = req.body;
-  
+
       // Check if teller_id or desk_id is missing
       if (!teller_id || !desk_id) {
         return res.status(400).json({ error: 'Missing teller_id or desk_id' });
       }
-  
+
       // Find the queue entry with the lowest serial ID that is still in queue
       const { rows: queueToUpdate } = await pool.query(
         `SELECT * FROM Queue WHERE process_status = 'IN QUEUE' ORDER BY queue_id LIMIT 1`
       );
-  
+
       console.log(queueToUpdate);
       console.log(req.body);
       if (queueToUpdate.length === 0) {
@@ -75,22 +75,21 @@ const queueController = {
           .status(404)
           .json({ error: 'No queue entry in queue status found' });
       }
-  
+
       const queueIdToUpdate = queueToUpdate[0].queue_id;
-  
+
       // Update the teller ID and change the status to 'PROCESSING'
       await pool.query(
         `UPDATE Queue SET teller_id = $1, process_status = $2, desk_id = $3 WHERE queue_id = $4`,
         [teller_id, status.processing, desk_id, queueIdToUpdate]
       );
-  
+
       res.status(200).json({ message: 'Queue entry updated successfully' });
     } catch (error) {
       console.error('Error updating queue entry:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   },
-  
 
   finishQueueById: async (req, res) => {
     try {

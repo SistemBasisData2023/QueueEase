@@ -71,19 +71,21 @@ const transactionController = {
   getTransactions: async (req, res) => {
     try {
       const { transaction_id } = req.params;
-      
-        const getTransactionsQuery = `
+
+      const getTransactionsQuery = `
             SELECT * FROM Transaction WHERE transaction_id = $1
         `;
-        const getTransactionsValues = [transaction_id];
+      const getTransactionsValues = [transaction_id];
 
-        const result = await pool.query(getTransactionsQuery, getTransactionsValues);
-        const transactions = result.rows;
-        if (!transactions) {
-          return res.status(404).json({ message: 'Transaction not found' });
-        }
-        res.status(200).json(transactions);
-
+      const result = await pool.query(
+        getTransactionsQuery,
+        getTransactionsValues
+      );
+      const transactions = result.rows;
+      if (!transactions) {
+        return res.status(404).json({ message: 'Transaction not found' });
+      }
+      res.status(200).json(transactions);
     } catch (error) {
       console.error('Error getting transactions:', error);
       res.status(500).json({ error: 'Internal server error' });

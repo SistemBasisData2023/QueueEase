@@ -1,5 +1,5 @@
 import Login from '../components/Login'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Global/Navbar'
 
 
 function LoginPage() {

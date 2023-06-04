@@ -4,7 +4,7 @@ const desk_status = require('../utils/desk_status');
 const tellerDeskController = {
   checkIn: async (req, res) => {
     try {
-       // TODO : Create a query to check if if teller_id is teller type
+      // TODO : Create a query to check if if teller_id is teller type
       const { teller_id, desk_no } = req.body;
 
       // Create a query to check if there is any desk occupied
@@ -37,7 +37,6 @@ const tellerDeskController = {
         message: 'Desk checked in successfully',
         desk_id: updatedDeskId,
       });
-      
     } catch (error) {
       console.error('Error checking in desk:', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -68,7 +67,10 @@ const tellerDeskController = {
       `;
       const checkDeskStatusValues = [desk_status.attending, desk_no];
 
-      const result2 = await pool.query(checkDeskStatusQuery, checkDeskStatusValues);
+      const result2 = await pool.query(
+        checkDeskStatusQuery,
+        checkDeskStatusValues
+      );
 
       if (!result2.rows[0]) {
         return res.status(400).json({ message: 'Desk is not occupied' });
@@ -83,7 +85,11 @@ const tellerDeskController = {
         WHERE desk_no = $2 AND status = $3
         RETURNING desk_no
       `;
-      const updateDeskValues = [desk_status.finished, desk_no, desk_status.attending];
+      const updateDeskValues = [
+        desk_status.finished,
+        desk_no,
+        desk_status.attending,
+      ];
 
       const updateResult = await pool.query(updateDeskQuery, updateDeskValues);
       const updatedDeskId = updateResult.rows[0].desk_no;
