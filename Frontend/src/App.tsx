@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import TellerPage from './pages/TellerPage';
 import DeskChoosePage from './pages/DeskChoosePage';
 import DashboardPage from './pages/Dashboard';
+import TransactionFormPage from './pages/TransactionFormPage';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/DeskChoose" element={<DeskChoosePage />} />
         <Route path="/Teller" element={<TellerPage />} />
+        <Route path="/transaction" element={<TransactionFormPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -30,7 +30,9 @@ const queueController = {
 
   getAllQueues: async (req, res) => {
     try {
-      const getAllQueuesQuery = 'SELECT * FROM Queue';
+      const getAllQueuesQuery = `SELECT Queue.queue_id, Queue.process_status, Customer.full_name
+      FROM Queue
+      JOIN Customer ON Queue.customer_id = Customer.customer_id`;
       const result = await pool.query(getAllQueuesQuery);
       const queues = result.rows;
       res.status(200).json(queues);
