@@ -6,6 +6,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import TellerPage from './pages/TellerPage';
 import DeskChoosePage from './pages/DeskChoosePage';
+import DashboardPage from './pages/Dashboard';
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/DeskChoose" element={<DeskChoosePage />} />
         <Route path="/Teller" element={<TellerPage />} />
-
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
