@@ -18,4 +18,6 @@ router.put('/update/:id', customerController.updateCustomerById);
 // Delete a customer by ID
 router.delete('/delete/:id', customerController.deleteCustomerById);
 
+router.get('/getByQueue/:id', customerController.getCustomerByQueueId);
+
 module.exports = router;
