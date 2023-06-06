@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {terbilang} from '../utils/terbilang'
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -8,7 +9,7 @@ function Login() {
 
   const handleLogin = () => {
     const data = { username, password };
-
+    console.log('Tes Terbilang:', terbilang(33));
     axios.post('http://localhost:5000/users/login', data)
       .then(response => {
         console.log(response.data);

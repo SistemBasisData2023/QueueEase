@@ -86,7 +86,7 @@ const queueController = {
         [teller_id, status.processing, desk_id, queueIdToUpdate]
       );
 
-      res.status(200).json({ message: 'Queue entry updated successfully' });
+      res.status(200).json({queue_id : queueIdToUpdate});
     } catch (error) {
       console.error('Error updating queue entry:', error);
       res.status(500).json({ error: 'Internal server error' });
