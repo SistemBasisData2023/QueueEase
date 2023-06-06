@@ -5,6 +5,6 @@ const transactionController = require('../controllers/transactionControllers');
 
 router.post('/create', transactionController.createTransaction);
 
-router.put('/git', transactionController.getTransactions);
+router.get('/get', transactionController.getTransactions);
 
 module.exports = router;

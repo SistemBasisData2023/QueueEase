@@ -18,6 +18,10 @@ function TellerPage() {
 
     // Fetch all queues from localhost:5000/queue/getAll
     fetchQueues();
+    const interval = setInterval(fetchQueues, 3000);
+
+    // Cleanup the interval when the component unmounts
+    return () => clearInterval(interval);
   }, []);
 
   const fetchQueues = () => {

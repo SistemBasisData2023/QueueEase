@@ -4,6 +4,7 @@ const { pool } = require('../config/config');
 const transactionController = {
   createTransaction: async (req, res) => {
     try {
+      console.log(req.body)
       const {
         customer_id,
         teller_id,
@@ -70,16 +71,13 @@ const transactionController = {
 
   getTransactions: async (req, res) => {
     try {
-      const { transaction_id } = req.params;
 
       const getTransactionsQuery = `
-            SELECT * FROM Transaction WHERE transaction_id = $1
+            SELECT * FROM Transaction;
         `;
-      const getTransactionsValues = [transaction_id];
 
       const result = await pool.query(
-        getTransactionsQuery,
-        getTransactionsValues
+        getTransactionsQuery
       );
       const transactions = result.rows;
       if (!transactions) {
@@ -91,6 +89,7 @@ const transactionController = {
       res.status(500).json({ error: 'Internal server error' });
     }
   },
+
 };
 
 module.exports = transactionController;

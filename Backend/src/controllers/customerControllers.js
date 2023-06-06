@@ -155,6 +155,39 @@ const customerController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
+  getCustomerByQueueId: async (req, res) => {
+    try {
+      const queueId = req.params.id;
+      console.log(queueId);
+      const getCustomerByQueueIdQuery = `
+        SELECT
+          q.queue_id,
+          c.customer_id,
+          c.full_name,
+          c.email,
+          c.phone_number,
+          c.address,
+          c.city,
+          c.postal_code,
+          c.bank_account_id
+        FROM Customer c
+        INNER JOIN Queue q
+        ON c.customer_id = q.customer_id
+        WHERE q.queue_id = $1
+      `;
+      const result = await pool.query(getCustomerByQueueIdQuery, [queueId]);
+      const customer = result.rows[0];
+
+      if (!customer) {
+        return res.status(404).json({ message: 'Customer not found' });
+      }
+
+      res.status(200).json(customer);
+    } catch (error) {
+      console.error('Error getting customer by queue ID', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
 };
 
 module.exports = customerController;
