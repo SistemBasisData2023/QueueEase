@@ -6,6 +6,11 @@ interface Queue {
   process_status: string;
   full_name: string;
 }
+//create documentation for tellerpage
+/**
+ * 
+ * @returns 
+ */
 
 function TellerPage() {
   const [tellerFullName, setTellerFullName] = useState('');
@@ -18,6 +23,8 @@ function TellerPage() {
 
     // Fetch all queues from localhost:5000/queue/getAll
     fetchQueues();
+
+    // Set an interval to fetch queues every 3 seconds
     const interval = setInterval(fetchQueues, 3000);
 
     // Cleanup the interval when the component unmounts
