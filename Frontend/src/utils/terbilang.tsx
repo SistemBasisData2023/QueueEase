@@ -1,7 +1,7 @@
 
 
 export function terbilang(angka: number): JSX.Element | null {
-  const bilne=["","satu","dua","tiga","empat","lima","enam","tujuh","delapan","sembilan","sepuluh","sebelas"];
+  const bilne=["kosong","satu","dua","tiga","empat","lima","enam","tujuh","delapan","sembilan","sepuluh","sebelas"];
 
   if (angka < 12) {
     return <audio src={`/path/to/${bilne[angka]}.mp3`} controls />;
