@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 interface Queue {
   queue_id: number;
   process_status: string;
@@ -20,7 +21,7 @@ function TellerPage() {
     // Get the teller full name from sessionStorage
     const fullName = sessionStorage.getItem('full_name');
     setTellerFullName(fullName || '');
-
+    
     // Fetch all queues from localhost:5000/queue/getAll
     fetchQueues();
 
@@ -65,6 +66,14 @@ function TellerPage() {
       });
   };
 
+  // create logout function
+  const logout = () => {
+    // remove all sessionStorage
+    sessionStorage.clear();
+    // go to /login
+    window.location.href = '/login';
+  };
+
   return (
     <div className="p-4">
       <h1 className="text-2xl mb-4">Daisy UI Page</h1>
@@ -89,6 +98,12 @@ function TellerPage() {
           <p>No queues available.</p>
         )}
       </div>
+      <button
+                  className="btn btn-primary ml-2"
+                  onClick={() => logout()}
+                >
+                  Logout
+                </button>
     </div>
   );
 }
