@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {terbilang} from '../utils/terbilang'
+import { handlePlaySound } from '../utils/audioUtils';
+import Navbar from './Global/Navbar';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
+
+
+  const handleSoundButton = () => {
+    handlePlaySound(inputValue);
+  };
+  
   const handleLogin = () => {
     const data = { username, password };
-    console.log('Tes Terbilang:', terbilang(33));
     axios.post('http://localhost:5000/users/login', data)
       .then(response => {
         console.log(response.data);
@@ -44,6 +51,7 @@ function Login() {
 
   return (
     <>
+      <Navbar />
       <div>
         <div className="card w-80 bg-base-100 shadow-xl image-full mx-auto">
           <figure>
@@ -62,7 +70,7 @@ function Login() {
                 placeholder="username"
                 className="input input-bordered w-full max-w-xs"
                 value={username}
-                onChange={event => setUsername(event.target.value)}
+                onChange={(event) => setUsername(event.target.value)}
               />
             </div>
             <div className="form-control w-full max-w-xs">
@@ -74,12 +82,27 @@ function Login() {
                 placeholder="password"
                 className="input input-bordered w-full max-w-xs"
                 value={password}
-                onChange={event => setPassword(event.target.value)}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Number</span>
+              </label>
+              <input
+                type="number"
+                placeholder="Enter a number"
+                className="input input-bordered w-full max-w-xs"
+                value={inputValue}
+                onChange={(event) => setInputValue(event.target.value)}
               />
             </div>
             <div className="card-actions">
               <button className="btn btn-primary" onClick={handleLogin}>
                 Login
+              </button>
+              <button className="btn btn-primary" onClick={handleSoundButton}>
+                Play Sound
               </button>
             </div>
           </div>

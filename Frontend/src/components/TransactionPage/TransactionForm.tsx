@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../Global/Loading';
+import { API_ENDPOINT } from '../../config/config';
 
 interface Customer {
   queue_id: number;
@@ -25,9 +26,9 @@ const TransactionForm: React.FC = () => {
     // Fetch customer data from the API
     const fetchCustomerData = async () => {
       const queueId = sessionStorage.getItem('queue_id');
-      console.log(`http://localhost:5000/customers/getByQueue/${queueId}`)
+      console.log(`${API_ENDPOINT}/customers/getByQueue/${queueId}`)
       try {
-        const response = await axios.get<Customer>(`http://localhost:5000/customers/getByQueue/${queueId}`);
+        const response = await axios.get<Customer>(`${API_ENDPOINT}/customers/getByQueue/${queueId}`);
         
         setCustomer(response.data);
         setIsLoading(false);
@@ -64,7 +65,7 @@ const TransactionForm: React.FC = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/transaction/create', transactionData);
+      const response = await axios.post(`${API_ENDPOINT}/transaction/create`, transactionData);
       console.log(response.data);
       // Perform any additional actions or show success message
     } catch (error) {

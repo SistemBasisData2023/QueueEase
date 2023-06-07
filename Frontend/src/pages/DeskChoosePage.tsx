@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../components/Global/Loading';
+import { API_ENDPOINT } from '../config/config';
 
 interface DeskStatusResponse {
   deskStatus: Record<string, string>;
@@ -15,7 +16,7 @@ function DeskChoosePage() {
   }, []);
 
   const fetchDeskStatus = () => {
-    axios.get<DeskStatusResponse>('http://localhost:5000/tellerdesk/checkDeskStatus')
+    axios.get<DeskStatusResponse>(`${API_ENDPOINT}/tellerdesk/checkDeskStatus`)
       .then(response => {
         setDeskStatus(response.data.deskStatus);
         setLoading(false);
@@ -38,7 +39,7 @@ function DeskChoosePage() {
         desk_no: Number(deskNo)
       };
       console.log(data);
-      axios.post('http://localhost:5000/tellerdesk/checkin', data)
+      axios.post(`${API_ENDPOINT}/tellerdesk/checkin`, data)
         .then(response => {
           // Check if check-in was successful
           console.log(response.data);

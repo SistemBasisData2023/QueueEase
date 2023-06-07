@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINT } from '../config/config';
 
 
 interface Queue {
@@ -33,7 +34,7 @@ function TellerPage() {
   }, []);
 
   const fetchQueues = () => {
-    axios.get<Queue[]>('http://localhost:5000/queue/getAll')
+    axios.get<Queue[]>(`${API_ENDPOINT}/queue/getAll`)
       .then(response => {
         setQueues(response.data);
       })
@@ -48,7 +49,7 @@ function TellerPage() {
     const deskId = sessionStorage.getItem('desk_no');
 
     // Send a PUT request to localhost:5000/queue/take
-    axios.put('http://localhost:5000/queue/take', {
+    axios.put(`${API_ENDPOINT}/queue/take`, {
       teller_id: tellerId,
       desk_id: deskId
     })
