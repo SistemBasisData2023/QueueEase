@@ -67,13 +67,25 @@ function DeskChoosePage() {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="space-x-4">
-        <button
-          className={`btn btn-primary ${isDeskOccupied('1') ? 'btn-disabled' : ''}`}
-          disabled={isDeskOccupied('1')}
-          onClick={() => handleCheckIn('1')}
-        >
-          1
-        </button>
+      <div className="card w-96 bg-base-100 shadow-xl">
+        <figure className="px-10 pt-10">
+          <img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" className="rounded-xl" />
+        </figure>
+        <div className="card-body items-center text-center">
+          <h2 className="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div className="card-actions">
+              <button
+              className={`btn btn-primary ${isDeskOccupied('1') ? 'btn-disabled' : ''}`}
+              disabled={isDeskOccupied('1')}
+              onClick={() => handleCheckIn('1')}
+            >
+              1
+            </button>
+          </div>
+        </div>
+      </div>
+        
         <button
           className={`btn btn-primary ${isDeskOccupied('2') ? 'btn-disabled' : ''}`}
           disabled={isDeskOccupied('2')}

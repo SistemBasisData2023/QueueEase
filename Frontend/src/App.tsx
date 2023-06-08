@@ -18,7 +18,7 @@ function App() {
         <Route path="/DeskChoose" element={<DeskChoosePage />} />
         <Route path="/Teller" element={<TellerPage />} />
         <Route path="/transaction" element={<TransactionFormPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/*" element={<DashboardPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
