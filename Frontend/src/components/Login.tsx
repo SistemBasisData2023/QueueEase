@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { handlePlaySound } from '../utils/audioUtils';
 import Navbar from './Global/Navbar';
+import { API_ENDPOINT } from '../config/config';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ function Login() {
   
   const handleLogin = () => {
     const data = { username, password };
-    axios.post('http://localhost:5000/users/login', data)
+    axios.post(`${API_ENDPOINT}/users/login`, data)
       .then(response => {
         console.log(response.data);
         const token = response.data.token;
