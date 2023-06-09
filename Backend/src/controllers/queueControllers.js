@@ -119,6 +119,27 @@ const queueController = {
       res.status(500).json({ error: 'Internal server error' });
     }
   },
+
+  getQueueByTeller: async (req, res) => {
+    try {
+      await pool.query(
+        "SELECT desk_id, MAX(queue_id) AS highest_queue_id FROM queue GROUP BY desk_id",
+        (error, results) => {
+          if (error) {
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+        
+          return res.status(200).json(results.rows);
+        }
+      );
+    } catch (error) {
+      console.error('Error updating queue entry:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+    
+  }
+  
+
 };
 
 module.exports = queueController;
