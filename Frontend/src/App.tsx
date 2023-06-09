@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
@@ -10,7 +9,6 @@ import TransactionFormPage from './pages/TransactionFormPage';
 import customerFormPage from './pages/customerFormPage';
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -21,11 +19,11 @@ function App() {
         <Route path="/customer" element={<customerFormPage />} />
         <Route path="/Teller" element={<TellerPage />} />
         <Route path="/transaction" element={<TransactionFormPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/*" element={<DashboardPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

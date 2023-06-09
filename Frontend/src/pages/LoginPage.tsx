@@ -1,15 +1,13 @@
-import Login from '../components/Login'
-import Navbar from '../components/Global/Navbar'
-
+import Login from '../components/Login';
+import Navbar from '../components/Global/Navbar';
 
 function LoginPage() {
-
   return (
     <>
-    <Navbar />
-    <Login />
+      <Navbar />
+      <Login />
     </>
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

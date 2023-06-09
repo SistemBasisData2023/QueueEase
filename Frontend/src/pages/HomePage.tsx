@@ -1,12 +1,13 @@
-import Home from "../components/Home"
+import Navbar from '../components/Global/Navbar';
+import Home from '../components/Home';
 
 function HomePage() {
+  return (
+    <>
+      <Navbar />
+      <Home />
+    </>
+  );
+}
 
-    return (
-      <>
-        <Home />
-      </>
-    )
-  }
-  
-  export default HomePage
+export default HomePage;

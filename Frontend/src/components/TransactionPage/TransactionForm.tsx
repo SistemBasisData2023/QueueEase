@@ -26,10 +26,12 @@ const TransactionForm: React.FC = () => {
     // Fetch customer data from the API
     const fetchCustomerData = async () => {
       const queueId = sessionStorage.getItem('queue_id');
-      console.log(`${API_ENDPOINT}/customers/getByQueue/${queueId}`)
+      console.log(`${API_ENDPOINT}/customers/getByQueue/${queueId}`);
       try {
-        const response = await axios.get<Customer>(`${API_ENDPOINT}/customers/getByQueue/${queueId}`);
-        
+        const response = await axios.get<Customer>(
+          `${API_ENDPOINT}/customers/getByQueue/${queueId}`
+        );
+
         setCustomer(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -41,15 +43,21 @@ const TransactionForm: React.FC = () => {
     fetchCustomerData();
   }, []);
 
-  const handleTransactionTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTransactionTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setTransactionType(event.target.value);
   };
 
-  const handleTransactionDescChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTransactionDescChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setTransactionDesc(event.target.value);
   };
 
-  const handleTransactionAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTransactionAmountChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setTransactionAmount(event.target.value);
   };
 
@@ -65,8 +73,13 @@ const TransactionForm: React.FC = () => {
     };
 
     try {
-      const response = await axios.post(`${API_ENDPOINT}/transaction/create`, transactionData);
+      const response = await axios.post(
+        `${API_ENDPOINT}/transaction/create`,
+        transactionData
+      );
       console.log(response.data);
+      //route back to teller
+      window.location.href = '/teller';
       // Perform any additional actions or show success message
     } catch (error) {
       console.error(error);
@@ -77,7 +90,7 @@ const TransactionForm: React.FC = () => {
   return (
     <div className="container">
       {isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
           {customer ? (
@@ -100,7 +113,11 @@ const TransactionForm: React.FC = () => {
           <form onSubmit={handleTransactionSubmit}>
             <div>
               <label htmlFor="transactionType">Transaction Type:</label>
-              <select id="transactionType" value={transactionType} onChange={handleTransactionTypeChange}>
+              <select
+                id="transactionType"
+                value={transactionType}
+                onChange={handleTransactionTypeChange}
+              >
                 <option value="">Select Type</option>
                 <option value="1">Deposit</option>
                 <option value="2">Withdraw</option>
@@ -124,7 +141,9 @@ const TransactionForm: React.FC = () => {
                 onChange={handleTransactionAmountChange}
               />
             </div>
-            <button className='btn btn-primary' type="submit">Submit</button>
+            <button className="btn btn-primary" type="submit">
+              Submit
+            </button>
           </form>
         </>
       )}
