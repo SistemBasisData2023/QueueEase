@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
 
-
 interface Queue {
   queue_id: number;
   process_status: string;
@@ -10,8 +9,8 @@ interface Queue {
 }
 //create documentation for tellerpage
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 
 function TellerPage() {
@@ -22,7 +21,7 @@ function TellerPage() {
     // Get the teller full name from sessionStorage
     const fullName = sessionStorage.getItem('full_name');
     setTellerFullName(fullName || '');
-    
+
     // Fetch all queues from localhost:5000/queue/getAll
     fetchQueues();
 
@@ -34,11 +33,12 @@ function TellerPage() {
   }, []);
 
   const fetchQueues = () => {
-    axios.get<Queue[]>(`${API_ENDPOINT}/queue/getAll`)
-      .then(response => {
+    axios
+      .get<Queue[]>(`${API_ENDPOINT}/queue/getAll`)
+      .then((response) => {
         setQueues(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching queues:', error);
       });
   };
@@ -49,19 +49,19 @@ function TellerPage() {
     const deskId = sessionStorage.getItem('desk_no');
 
     // Send a PUT request to localhost:5000/queue/take
-    axios.put(`${API_ENDPOINT}/queue/take`, {
-      teller_id: tellerId,
-      desk_id: deskId
-    })
-      .then(response => {
+    axios
+      .put(`${API_ENDPOINT}/queue/take`, {
+        teller_id: tellerId,
+        desk_id: deskId,
+      })
+      .then((response) => {
         // Handle successful queue take
         console.log('Queue taken successfully:', response.data);
         // go to /transaction
         sessionStorage.setItem('queue_id', response.data.queue_id);
         window.location.href = '/transaction';
-
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle queue take failure
         console.error('Error taking queue:', error);
       });
@@ -70,28 +70,41 @@ function TellerPage() {
   // create logout function
   const logout = () => {
     // remove all sessionStorage
-    sessionStorage.clear();
-    // go to /login
-    window.location.href = '/login';
+    const desk_no = sessionStorage.getItem('desk_no');
+    const teller_id = sessionStorage.getItem('account_id');
+    const data = { desk_no, teller_id };
+
+    axios
+      .put(`${API_ENDPOINT}/tellerdesk/checkout`, data)
+      .then((response) => {
+        // Handle successful queue take
+        console.log('Queue taken successfully:', response.data);
+        sessionStorage.clear();
+
+        // go to /login
+        window.location.href = '/login';
+      })
+      .catch((error) => {
+        // Handle queue take failure
+        console.error('Error checking out', error);
+      });
   };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl mb-4">Daisy UI Page</h1>
       <p>Welcome, {tellerFullName}</p>
-      <button
-                  className="btn btn-primary ml-2"
-                  onClick={() => takeQueue()}
-                >
-                  Take Queue
-                </button>
+      <button className="btn btn-primary ml-2" onClick={() => takeQueue()}>
+        Take Queue
+      </button>
       <div className="my-4">
         <h2 className="text-lg font-medium mb-2">Queues</h2>
         {queues.length > 0 ? (
           <ul>
-            {queues.map(queue => (
+            {queues.map((queue) => (
               <li key={queue.queue_id} className="mb-2">
-                <span className="font-medium">{queue.full_name}</span> - {queue.process_status}
+                <span className="font-medium">{queue.full_name}</span> -{' '}
+                {queue.process_status}
               </li>
             ))}
           </ul>
@@ -99,12 +112,9 @@ function TellerPage() {
           <p>No queues available.</p>
         )}
       </div>
-      <button
-                  className="btn btn-primary ml-2"
-                  onClick={() => logout()}
-                >
-                  Logout
-                </button>
+      <button className="btn btn-primary ml-2" onClick={() => logout()}>
+        Logout
+      </button>
     </div>
   );
 }

@@ -1,12 +1,11 @@
-import TransactionForm from "../components/TransactionPage/TransactionForm"
+import TransactionForm from '../components/TransactionPage/TransactionForm';
 
 function TransactionFormPage() {
-
-    return (
+  return (
     <>
-        <TransactionForm />
+      <TransactionForm />
     </>
-    )
-  }
-  
-  export default TransactionFormPage
+  );
+}
+
+export default TransactionFormPage;

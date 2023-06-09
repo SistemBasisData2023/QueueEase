@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
@@ -9,7 +8,6 @@ import DashboardPage from './pages/Dashboard';
 import TransactionFormPage from './pages/TransactionFormPage';
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -22,7 +20,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

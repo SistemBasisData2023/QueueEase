@@ -10,16 +10,15 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
 
-
-
   const handleSoundButton = () => {
     handlePlaySound(inputValue);
   };
-  
+
   const handleLogin = () => {
     const data = { username, password };
-    axios.post(`${API_ENDPOINT}/users/login`, data)
-      .then(response => {
+    axios
+      .post(`${API_ENDPOINT}/users/login`, data)
+      .then((response) => {
         console.log(response.data);
         const token = response.data.token;
         const typeId = response.data.type_id;
@@ -34,29 +33,28 @@ function Login() {
         }
         if (typeId === 1) {
           window.location.href = '/admin';
-        }
-        else if (typeId === 2) {
+        } else if (typeId === 2) {
           window.location.href = '/DeskChoose';
-        }
-        else if (typeId === 3){
+        } else if (typeId === 3) {
           window.location.href = '/frontdesk';
-        }
-        else {
+        } else {
           setErrorMessage('Invalid Type Id');
         }
       })
-      .catch(error => {
-          console.error('Error:', error.message);
+      .catch((error) => {
+        console.error('Error:', error.message);
       });
   };
 
   return (
     <>
-      <Navbar />
       <div>
         <div className="card w-80 bg-base-100 shadow-xl image-full mx-auto">
           <figure>
-            <img src="..\src\assets\karsten-winegeart-4bC1Ef88OYI-unsplash 1.png" alt="Shoes" />
+            <img
+              src="..\src\assets\karsten-winegeart-4bC1Ef88OYI-unsplash 1.png"
+              alt="Shoes"
+            />
           </figure>
           <div className="card-body">
             {errorMessage && (
