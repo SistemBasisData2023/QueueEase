@@ -13,4 +13,6 @@ router.put('/take', queueController.takeQueueById);
 
 router.put('/finish/:id', queueController.finishQueueById);
 
+router.get('/getByTeller', queueController.getQueueByTeller);
+
 module.exports = router;
