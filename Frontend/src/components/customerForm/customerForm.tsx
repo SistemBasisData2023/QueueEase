@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { API_ENDPOINT } from '../../config/config';
 
-function customerForm() {
+
+function CustomerFormPage() {
   const [customerId, setCustomerId] = useState('');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -9,26 +12,51 @@ function customerForm() {
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [bankAccountId, setBankAccountId] = useState('');
+  const [notification, setNotification] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Perform form submission or validation logic here
+
+    try {
+      // Prepare the form data
+      const formData = {
+        full_name: fullName,
+        email,
+        phone_number: phoneNumber,
+        address,
+        city,
+        postal_code: postalCode,
+        bank_account_id: bankAccountId,
+      };
+
+      console.log(formData);
+
+      // Send the POST request to the backend
+      await axios.post(`${API_ENDPOINT}/customers/add`, formData);
+
+      // Clear the form inputs
+      setFullName('');
+      setEmail('');
+      setPhoneNumber('');
+      setAddress('');
+      setCity('');
+      setPostalCode('');
+      setBankAccountId('');
+
+      // Display a success notification
+      setNotification('Form submitted successfully');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Display an error notification
+      setNotification('An error occurred. Please try again later.');
+    }
   };
 
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-6">Banking Queue Form</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block mb-2 font-bold" htmlFor="customerId">Customer ID</label>
-          <input
-            id="customerId"
-            type="text"
-            className="input input-bordered w-full"
-            value={customerId}
-            onChange={(e) => setCustomerId(e.target.value)}
-          />
-        </div>
         <div className="mb-4">
           <label className="block mb-2 font-bold" htmlFor="fullName">Full Name</label>
           <input
@@ -105,4 +133,4 @@ function customerForm() {
   );
 }
 
-export default customerForm;
+export default CustomerFormPage;
