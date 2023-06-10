@@ -16,6 +16,9 @@ export const playAudioSequence = (audioSources: string[], index = 0) => {
         // Move on to the next audio file in case of an error
         playAudioSequence(audioSources, index + 1);
       });
+
+      audio.volume = 1;
+
       audio.play().catch((error) => {
         console.error('Failed to play audio:', error);
         // Move on to the next audio file in case of an error

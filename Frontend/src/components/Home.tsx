@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
+import Navbar from '../components/Global/Navbar';
 
 interface QueueItem {
   desk_id: number;
@@ -16,6 +17,7 @@ function Home() {
       try {
         const response = await axios.get(`${API_ENDPOINT}/queue/getByTeller`);
         setQueue(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
@@ -35,51 +37,97 @@ function Home() {
 
   return (
     <>
-      <div className="p-6">
-        <div className="mockup-window bg-base-300 p-6">
-          <div className="flex flex-col items-center justify-center">
-            <ReactPlayer
-              className="w-2/3 h-auto"
-              url="src/assets/video/home_video.mp4"
-              playing
-              loop
-              muted
-              controls={false}
-            />
+      <div className="p-20 grid grid-cols-3 gap-6 min-h-screen bg-cover bg-center bg-gradient-to-tr from-gray-900 to-blue-900">
+        <div className="col-span-2 ">
+          <video
+            src={'src/assets/video/home_video_2.mp4'}
+            className="w-full h-full object-cover rounded-m"
+            autoPlay
+            muted
+            loop
+          />
+        </div>
+
+        <div className="col-span-1 bg-black-new rounded-xl p-6">
+          <h3 className="text-2xl font-bold text-white mb-4">Antrian</h3>
+          <div className="chat chat-start">
+            <div className="chat-image avatar">
+              <div className="w-10 rounded-full bg-white pt-2">
+                <h3 className="flex justify-center items-center text-m font-bold text-black ">
+                  A2
+                </h3>
+              </div>
+            </div>
+            <div className="chat-bubble text-white">Rafie Amandio Fauzan</div>
           </div>
         </div>
+        <div className="col-span-3">
+          <div className="grid grid-cols-4 gap-6">
+            <div
+              className="col-span-1 bg-black-new rounded-xl p-6 items-center justify-center"
+              style={{
+                backgroundImage: "url('src/assets/Rectangle1.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">
+                Loket 1
+              </h3>
+              <p className="text-2xl text-white text-center">
+                A{getQueueByDeskId(1)}
+              </p>
+            </div>
 
-        <div className="grid grid-cols-4 gap-4 mt-6">
-          <QueueBox title="Loket 1" queue={getQueueByDeskId(1)} />
-          <QueueBox title="Loket 2" queue={getQueueByDeskId(2)} />
-          <QueueBox title="Loket 3" queue={getQueueByDeskId(3)} />
-          <QueueBox title="Loket 4" queue={getQueueByDeskId(4)} />
-        </div>
-
-        <div className="mt-6">
-          <h2 className="text-xl font-bold mb-2">Queue List</h2>
-          <ul>
-            {queue.map((item, index) => (
-              <li key={index}>{item.highest_queue_id}</li>
-            ))}
-          </ul>
+            <div
+              className="col-span-1 bg-black-new rounded-xl p-6 items-center justify-center"
+              style={{
+                backgroundImage: "url('src/assets/Rectangle2.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">
+                Loket 2
+              </h3>
+              <p className="text-2xl text-white text-center">
+                A{getQueueByDeskId(2)}
+              </p>
+            </div>
+            <div
+              className="col-span-1 bg-black-new rounded-xl p-6 items-center justify-center"
+              style={{
+                backgroundImage: "url('src/assets/Rectangle3.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">
+                Loket 3
+              </h3>
+              <p className="text-2xl text-white text-center">
+                A{getQueueByDeskId(3)}
+              </p>
+            </div>
+            <div
+              className="col-span-1 bg-black-new rounded-xl p-6 items-center justify-center"
+              style={{
+                backgroundImage: "url('src/assets/Rectangle4.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">
+                Loket 4
+              </h3>
+              <p className="text-2xl text-white text-center">
+                A{getQueueByDeskId(4)}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </>
-  );
-}
-
-interface QueueBoxProps {
-  title: string;
-  queue: number;
-}
-
-function QueueBox({ title, queue }: QueueBoxProps) {
-  return (
-    <div className="bg-base-200 p-4 rounded-xl">
-      <h2 className="text-lg font-semibold mb-2">{title}</h2>
-      <p className="text-gray-500">Queue: {queue}</p>
-    </div>
   );
 }
 
