@@ -9,59 +9,50 @@ Customers will be given a queue number and wait for their turn while monitoring 
 # Installation Guide
 
 Clone this repository
+
+```
+git clone https://github.com/SistemBasisData2023/QueueEase.git
+```
+
+## Frontend
+
+- Ensure You’re on the right folder
+
+  <img width="153" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/5bc53ff0-9cb4-4b98-b76f-2fb0b4333860">
+
   ```
   git clone https://github.com/SistemBasisData2023/QueueEase.git
   ```
-## Frontend
-   * Ensure You’re on the right folder
-     
-     <img width="153" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/5bc53ff0-9cb4-4b98-b76f-2fb0b4333860">
-     
-      ```
-      git clone https://github.com/SistemBasisData2023/QueueEase.git
-      ```
-   * Run npm install to install all dependencies
-     ```
-      npm install
-      ```
-   * To test the installation result run
-       ```
-      npm run dev
-      ```
-      <img width="288" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/a22d9c66-4e36-445f-9d48-31807f399a51">
+
+- Run npm install to install all dependencies
+  ```
+   npm install
+  ```
+- To test the installation result run
+  ```
+  npm run dev
+  ```
+   <img width="288" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/a22d9c66-4e36-445f-9d48-31807f399a51">
 
 ## Backend
-   * Ensure You’re on the right folder
-   
-     <img width="162" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/634c08fa-b33a-4c19-be0a-868e18e21e21">
-   * Run npm install to install all dependencies
-     ```
-      npm install
-      ```
-   * Create an .env file in your project root folder and add your variables.
-   
-     <img width="187" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/c6fd8cef-e5dd-4ec7-8fbf-81a72eb4d8c6">
-   * Insert Database Variables
-   
-     <img width="807" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/c450082c-e494-4e4d-92eb-9ca67ba3a3f4">
-     
-      ```
-      DB_HOST = 'ep-delicate-mode-848049.ap-southeast-1.aws.neon.tech'
-      DB_DATABASE = 'queueease'
-      DB_USER = 'rafie.amandio'
-      DB_PASSWORD = 'xcAQ5B4XzPSj'
-      DB_PORT = 5432
 
-      PORT = 5000
+- Ensure You’re on the right folder
 
-      TOKEN_KEY = 'kelompokC3Asik'
-      ```
-      
-   * To test the installation result run
-     ```
-      npm run start
-      ```
+  <img width="162" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/634c08fa-b33a-4c19-be0a-868e18e21e21">
 
+- Run npm install to install all dependencies
+  ```
+   npm install
+  ```
+- Create an .env file in your project root folder and add your variables.
 
+  <img width="187" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/c6fd8cef-e5dd-4ec7-8fbf-81a72eb4d8c6">
 
+- Insert Database Variables
 
+  <img width="807" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/c450082c-e494-4e4d-92eb-9ca67ba3a3f4">
+
+- To test the installation result run
+  ```
+   npm run start
+  ```
