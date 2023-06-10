@@ -29,11 +29,11 @@ export const playAudioSequence = (audioSources: string[], index = 0) => {
   export const handlePlaySound = (inputValue: string, loket: number) => {
     const number = parseInt(inputValue, 10);
     const audioSources = terbilang(number);
-    
+    const neww = 'src/assets/audio/AntrianNomor.mp3|src/assets/audio/a.mp3|' + audioSources + '|src/assets/audio/keloket.mp3|' + terbilang(loket);
 
     
-    if (audioSources) {
-      playAudioSequence(audioSources.split('|'));
+    if (neww) {
+      playAudioSequence(neww.split('|'));
     }
   };
   
