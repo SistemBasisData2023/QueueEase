@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
 import { io } from 'socket.io-client';
+import { handlePlaySound } from '../utils/audioUtils';
 
 const socket = io(API_ENDPOINT);
 
@@ -24,6 +25,13 @@ function Home() {
     socket.on('queueUpdated', () => {
       console.log('queueUpdated');
       fetchData();
+    });
+
+    socket.on('take', (desk_id, queueIdToUpdate) => {
+      const int_desk = parseInt(desk_id);
+      console.log('take', desk_id);
+      console.log('take', queueIdToUpdate);
+      handlePlaySound(queueIdToUpdate, int_desk);
     });
     const fetchData = async () => {
       try {
