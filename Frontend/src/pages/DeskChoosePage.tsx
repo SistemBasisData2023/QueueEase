@@ -8,6 +8,60 @@ interface DeskStatusResponse {
   deskStatus: Record<string, string>;
 }
 
+interface CardProps {
+  imageSrc: string;
+  deskNo: string;
+  handleCheckIn: (deskNo: string) => void;
+  isDeskOccupied: (deskNo: string) => boolean;
+}
+
+const Card: React.FC<CardProps> = ({
+  imageSrc,
+  deskNo,
+  handleCheckIn,
+  isDeskOccupied,
+}) => {
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const handleClick = () => {
+    if (!isDisabled) {
+      handleCheckIn(deskNo);
+    }
+  };
+
+  useEffect(() => {
+    setIsDisabled(isDeskOccupied(deskNo));
+  }, [isDeskOccupied, deskNo]);
+
+  return (
+    <div
+      className={`relative col-span-1 bg-black-new rounded-xl p-6 items-center justify-center hover:scale-105 transition-transform duration-300 ${
+        isDisabled
+          ? ' bg-gray-900 opacity-50 cursor-not-allowed'
+          : 'cursor-pointer'
+      }`}
+      style={{
+        backgroundImage: `url(${imageSrc})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+      onClick={handleClick}
+    >
+      {isDisabled ? (
+        <div className="flex items-center justify-center rounded-xl">
+          <div className="p-4 h-full">
+            <span className="text-white text-xl">Occupied</span>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center h-full text-white text-bold text-2xl">
+          Loket {deskNo}
+        </div>
+      )}
+    </div>
+  );
+};
+
 function DeskChoosePage() {
   const [deskStatus, setDeskStatus] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
@@ -20,6 +74,7 @@ function DeskChoosePage() {
     axios
       .get<DeskStatusResponse>(`${API_ENDPOINT}/tellerdesk/checkDeskStatus`)
       .then((response) => {
+        console.log(response.data);
         setDeskStatus(response.data.deskStatus);
         setLoading(false);
       })
@@ -69,76 +124,31 @@ function DeskChoosePage() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center ">
-        <div className="flex flex-row space-x-4">
-          <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Loket 1</h2>
-              <div className="card-actions">
-                <button
-                  className={`btn btn-primary ${
-                    isDeskOccupied('1') ? 'btn-disabled' : ''
-                  }`}
-                  disabled={isDeskOccupied('1')}
-                  onClick={() => handleCheckIn('1')}
-                >
-                  Masuk
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Loket 2</h2>
-              <div className="card-actions">
-                <button
-                  className={`btn btn-primary ${
-                    isDeskOccupied('2') ? 'btn-disabled' : ''
-                  }`}
-                  disabled={isDeskOccupied('2')}
-                  onClick={() => handleCheckIn('2')}
-                >
-                  Masuk
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Loket 3</h2>
-              <div className="card-actions">
-                <button
-                  className={`btn btn-primary ${
-                    isDeskOccupied('3') ? 'btn-disabled' : ''
-                  }`}
-                  disabled={isDeskOccupied('3')}
-                  onClick={() => handleCheckIn('3')}
-                >
-                  Masuk
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Loket 4</h2>
-              <div className="card-actions">
-                <button
-                  className={`btn btn-primary ${
-                    isDeskOccupied('4') ? 'btn-disabled' : ''
-                  }`}
-                  disabled={isDeskOccupied('4')}
-                  onClick={() => handleCheckIn('4')}
-                >
-                  Masuk
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="p-4 md:p-10 lg:p-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 min-h-screen bg-cover bg-center bg-gradient-to-tr from-gray-900 to-blue-900">
+        <Card
+          imageSrc="src/assets/Rectangle1.png"
+          deskNo="1"
+          handleCheckIn={handleCheckIn}
+          isDeskOccupied={isDeskOccupied}
+        />
+        <Card
+          imageSrc="src/assets/Rectangle2.png"
+          deskNo="2"
+          handleCheckIn={handleCheckIn}
+          isDeskOccupied={isDeskOccupied}
+        />
+        <Card
+          imageSrc="src/assets/Rectangle3.png"
+          deskNo="3"
+          handleCheckIn={handleCheckIn}
+          isDeskOccupied={isDeskOccupied}
+        />
+        <Card
+          imageSrc="src/assets/Rectangle4.png"
+          deskNo="4"
+          handleCheckIn={handleCheckIn}
+          isDeskOccupied={isDeskOccupied}
+        />
       </div>
     </>
   );
