@@ -26,10 +26,12 @@ export const playAudioSequence = (audioSources: string[], index = 0) => {
       });
   };
   
-  export const handlePlaySound = (inputValue: string) => {
+  export const handlePlaySound = (inputValue: string, loket: number) => {
     const number = parseInt(inputValue, 10);
     const audioSources = terbilang(number);
+    
 
+    
     if (audioSources) {
       playAudioSequence(audioSources.split('|'));
     }

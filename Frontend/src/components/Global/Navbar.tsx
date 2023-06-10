@@ -41,7 +41,7 @@ function Navbar() {
           </ul>
           <div className="ml-5 mr-auto">
             <button className="px-4 py-2 text-white bg-yellow-primary">
-              Login
+              <a href="/login">Login</a>
             </button>
           </div>
         </div>

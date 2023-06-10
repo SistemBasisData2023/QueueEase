@@ -2,37 +2,56 @@ import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
-import Navbar from '../components/Global/Navbar';
+import { io } from 'socket.io-client';
+
+const socket = io(API_ENDPOINT);
 
 interface QueueItem {
   desk_id: number;
   highest_queue_id: number;
 }
 
+interface WaitingQueueItem {
+  queue_id: number;
+  full_name: string;
+}
+
 function Home() {
   const [queue, setQueue] = useState<QueueItem[]>([]);
+  const [waitingQueue, setWaitingQueue] = useState<WaitingQueueItem[]>([]);
 
   useEffect(() => {
+    socket.on('queueUpdated', () => {
+      console.log('queueUpdated');
+      fetchData();
+    });
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API_ENDPOINT}/queue/getByTeller`);
         setQueue(response.data);
-        console.log(response.data);
+
+        const response2 = await axios.get(
+          `${API_ENDPOINT}/queue/getWaitingQueue`
+        );
+        console.log(response2.data);
+
+        setWaitingQueue(response2.data);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
     };
 
-    const intervalId = setInterval(fetchData, 2000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
+    fetchData();
   }, []);
 
   const getQueueByDeskId = (deskId: number) => {
     const desk = queue.find((item) => item.desk_id === deskId);
     return desk ? desk.highest_queue_id : 0;
+  };
+
+  const getWaitingQueueName = (id: number) => {
+    const item = waitingQueue.find((item) => item.queue_id === id);
+    return item ? item.full_name : '';
   };
 
   return (
@@ -50,16 +69,20 @@ function Home() {
 
         <div className="col-span-1 bg-black-new rounded-xl p-6">
           <h3 className="text-2xl font-bold text-white mb-4">Antrian</h3>
-          <div className="chat chat-start">
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full bg-white pt-2">
-                <h3 className="flex justify-center items-center text-m font-bold text-black ">
-                  A2
-                </h3>
+          {waitingQueue.map((item) => (
+            <div key={item.queue_id} className="chat chat-start">
+              <div className="chat-image avatar">
+                <div className="w-10 rounded-full bg-white pt-2">
+                  <h3 className="flex justify-center items-center text-m font-bold text-black ">
+                    A{item.queue_id}
+                  </h3>
+                </div>
+              </div>
+              <div className="chat-bubble text-white" key={item.queue_id}>
+                {item.full_name}
               </div>
             </div>
-            <div className="chat-bubble text-white">Rafie Amandio Fauzan</div>
-          </div>
+          ))}
         </div>
         <div className="col-span-3">
           <div className="grid grid-cols-4 gap-6">
