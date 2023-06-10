@@ -12,7 +12,7 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSoundButton = () => {
-    handlePlaySound(inputValue);
+    handlePlaySound(inputValue, 2);
   };
 
   const handleLogin = () => {

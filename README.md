@@ -50,8 +50,6 @@ git clone https://github.com/SistemBasisData2023/QueueEase.git
 
 - Insert Database Variables
 
-  <img width="807" alt="image" src="https://github.com/SistemBasisData2023/QueueEase/assets/113244831/c450082c-e494-4e4d-92eb-9ca67ba3a3f4">
-
 - To test the installation result run
   ```
    npm run start
