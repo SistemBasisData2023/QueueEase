@@ -1,2 +1,2 @@
 
-export const API_ENDPOINT = 'https://famous-crown-fox.cyclic.app';
+export const API_ENDPOINT = 'https://queueease.up.railway.app';
