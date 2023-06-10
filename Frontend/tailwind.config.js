@@ -10,6 +10,7 @@ export default {
         'purple-primary': '#39289F',
         'yellow-primary': '#FA9021',
         'black-new' : '#1C140F',
+        'purple-new' : '#1D1D41',
         
       },
       fontFamily: {

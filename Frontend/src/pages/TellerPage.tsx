@@ -48,7 +48,7 @@ function TellerPage() {
     const tellerId = sessionStorage.getItem('account_id');
     const deskId = sessionStorage.getItem('desk_no');
 
-    // Send a PUT request to localhost:5000/queue/take
+    // Send a PUT request to ENDPOINT/queue/take
     axios
       .put(`${API_ENDPOINT}/queue/take`, {
         teller_id: tellerId,
