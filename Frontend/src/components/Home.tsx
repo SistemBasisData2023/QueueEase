@@ -16,6 +16,7 @@ function Home() {
       try {
         const response = await axios.get(`${API_ENDPOINT}/queue/getByTeller`);
         setQueue(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
@@ -43,7 +44,6 @@ function Home() {
               url="src/assets/video/home_video.mp4"
               playing
               loop
-              muted
               controls={false}
             />
           </div>

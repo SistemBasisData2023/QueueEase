@@ -7,7 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        'purple-primary': '#403B70',
+        'purple-primary': '#39289F',
+        'yellow-primary': '#FA9021',
+        'black-new' : '#1C140F',
+        
+      },
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif'],
+        'rubik': ['Rubik', 'sans-serif'],
       }
     },
   },
