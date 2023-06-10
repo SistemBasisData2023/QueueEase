@@ -32,7 +32,9 @@ function Home() {
       console.log('take', desk_id);
       console.log('take', queueIdToUpdate);
       handlePlaySound(queueIdToUpdate, int_desk);
+      fetchData();
     });
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API_ENDPOINT}/queue/getByTeller`);
