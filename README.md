@@ -13,6 +13,7 @@ Customers will be given a queue number and wait for their turn while monitoring 
 # :bar_chart: Diagram
 
 UML
+
 ![](https://hackmd-prod-images.s3-ap-northeast-1.amazonaws.com/uploads/upload_d165531e1f6d9025db6b3caca20329d7.png?AWSAccessKeyId=AKIA3XSAAW6AWSKNINWO&Expires=1686496044&Signature=2cWlT7ULi2Tuk2T7Gn6TP1axRGY%3D)
 
 # :computer: Installation Guide
@@ -63,3 +64,9 @@ git clone https://github.com/SistemBasisData2023/QueueEase.git
   ```
    npm run start
   ```
+  
+# 💻 Progress Report:
+![image](https://github.com/SistemBasisData2023/QueueEase/assets/113244831/ee64afb4-cfb5-4560-b533-e080e13d3556)
+![image](https://github.com/SistemBasisData2023/QueueEase/assets/113244831/089c242d-9be7-4bc8-8cc7-dc003dbaa2b0)
+
+
