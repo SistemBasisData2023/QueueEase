@@ -13,7 +13,7 @@ Customers will be given a queue number and wait for their turn while monitoring 
 # :bar_chart: Diagram
 
 UML
-![](https://hackmd.io/_uploads/H1bGgwmvh.png)
+![](https://hackmd-prod-images.s3-ap-northeast-1.amazonaws.com/uploads/upload_d165531e1f6d9025db6b3caca20329d7.png?AWSAccessKeyId=AKIA3XSAAW6AWSKNINWO&Expires=1686496044&Signature=2cWlT7ULi2Tuk2T7Gn6TP1axRGY%3D)
 
 # :computer: Installation Guide
 

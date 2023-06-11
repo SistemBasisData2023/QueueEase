@@ -3,6 +3,7 @@ import axios from 'axios';
 import Loading from '../components/Global/Loading';
 import { API_ENDPOINT } from '../config/config';
 import Navbar from '../components/Global/Navbar';
+import checkAuthentication from '../middleware/checkAuthentication';
 
 interface DeskStatusResponse {
   deskStatus: Record<string, string>;
@@ -67,6 +68,7 @@ function DeskChoosePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    checkAuthentication();
     fetchDeskStatus();
   }, []);
 

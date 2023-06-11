@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
+import checkAuthentication from '../middleware/checkAuthentication';
 
 interface TellerInfo {
   teller_id: string;
@@ -35,6 +36,7 @@ function Dashboard() {
       });
   };
   useEffect(() => {
+    checkAuthentication();
     const fetchTellerInfo = async () => {
       try {
         const response = await axios.get<TellerInfo[]>(

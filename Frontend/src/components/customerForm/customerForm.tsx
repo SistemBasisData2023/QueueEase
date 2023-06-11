@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_ENDPOINT } from '../../config/config';
 import Navbar from '../Global/Navbar';
+import checkAuthentication from '../../middleware/checkAuthentication';
 
 function CustomerFormPage() {
   const [customerId, setCustomerId] = useState('');
@@ -19,13 +20,11 @@ function CustomerFormPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const handlephoneNumber = (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handlephoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
       const regexPattern = /^\d+(\.\d{1,2})?$/;
       const value = event.target.value;
       const isValid = regexPattern.test(value) || value === '';
-  
+
       setPhoneNumber(value);
       setPhoneNumberValid(isValid);
     };
@@ -232,7 +231,12 @@ function CustomerFormPage() {
                   viewBox="0 0 24 24"
                   stroke="#FFF"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 <p className="text-green-900">{notification}</p>
               </div>

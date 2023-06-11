@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
 import { io } from 'socket.io-client';
 import { handlePlaySound } from '../utils/audioUtils';
+import checkAuthentication from '../middleware/checkAuthentication';
 
 const socket = io(API_ENDPOINT);
 
@@ -14,7 +15,7 @@ interface WaitingQueueItem {
 
 function TellerPage() {
   const [waitingQueue, setWaitingQueue] = useState<WaitingQueueItem[]>([]);
-
+  checkAuthentication();
   useEffect(() => {
     socket.on('queueUpdated', () => {
       console.log('queueUpdated');
