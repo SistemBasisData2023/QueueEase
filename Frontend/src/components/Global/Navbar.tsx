@@ -1,4 +1,19 @@
+import React, { useEffect, useState } from 'react';
+
 function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const logout = () => {
+    sessionStorage.clear();
+    setIsLoggedIn(false);
+  };
+
+  useEffect(() => {
+    // Check session storage on component mount
+    const fullName = sessionStorage.getItem('full_name');
+    setIsLoggedIn(!!fullName);
+  }, []);
+
   return (
     <nav className="bg-transparent fixed w-full z-20 top-0 left-0 ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4 px-12">
@@ -40,9 +55,18 @@ function Navbar() {
             </li>
           </ul>
           <div className="ml-5 mr-auto">
-            <button className="px-4 py-2 text-white bg-yellow-primary">
-              <a href="/login">Login</a>
-            </button>
+            {isLoggedIn ? (
+              <button
+                className="px-4 py-2 text-white bg-red-200"
+                onClick={() => logout()}
+              >
+                <a href="/login">Logout</a>
+              </button>
+            ) : (
+              <button className="px-4 py-2 text-white bg-yellow-primary">
+                <a href="/login">Login</a>
+              </button>
+            )}
           </div>
         </div>
       </div>
