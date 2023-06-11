@@ -6,6 +6,11 @@ The Teller is responsible for serving customers according to their queue number.
 
 Customers will be given a queue number and wait for their turn while monitoring the monitor. The assigned queue number will be registered in a database accessible by the teller. After being served by the teller, the queue number will be marked as "Completed" and recorded in the historical database.
 
+# Diagram
+
+UML
+![](https://hackmd.io/_uploads/H1bGgwmvh.png)
+
 # Installation Guide
 
 Clone this repository
