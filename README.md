@@ -13,6 +13,13 @@ Customers will be given a queue number and wait for their turn while monitoring 
 # :bar_chart: Diagram
 
 UML
+![image](https://github.com/SistemBasisData2023/QueueEase/assets/113244831/945ec7f7-ef49-4425-8fb4-860b681dbcfc)
+
+ERD
+![image](https://github.com/SistemBasisData2023/QueueEase/assets/113244831/e63b7f9a-95b3-4015-a307-3320bb47764a)
+
+Flowchart
+![image](https://github.com/SistemBasisData2023/QueueEase/assets/113244831/1ba2516e-04b8-4c7d-811c-b715062c59ce)
 
 ![](https://hackmd-prod-images.s3-ap-northeast-1.amazonaws.com/uploads/upload_d165531e1f6d9025db6b3caca20329d7.png?AWSAccessKeyId=AKIA3XSAAW6AWSKNINWO&Expires=1686496044&Signature=2cWlT7ULi2Tuk2T7Gn6TP1axRGY%3D)
 
