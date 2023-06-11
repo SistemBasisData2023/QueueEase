@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Sidebar() {
+function Tellersidebar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -183,4 +183,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default Tellersidebar;
