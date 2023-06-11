@@ -21,6 +21,7 @@ const TransactionForm: React.FC = () => {
   const [transactionDesc, setTransactionDesc] = useState<string>('');
   const [transactionAmount, setTransactionAmount] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTransactionAmountValid, setTransactionAmountValid] = useState<boolean>(true);
 
   useEffect(() => {
     // Fetch customer data from the API
@@ -58,7 +59,12 @@ const TransactionForm: React.FC = () => {
   const handleTransactionAmountChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setTransactionAmount(event.target.value);
+    const regexPattern = /^\d+(\.\d{1,2})?$/;
+    const value = event.target.value;
+    const isValid = regexPattern.test(value) || value === '';
+
+    setTransactionAmount(value);
+    setTransactionAmountValid(isValid);
   };
 
   const handleTransactionSubmit = async (event: React.FormEvent) => {
@@ -192,6 +198,11 @@ const TransactionForm: React.FC = () => {
                   value={transactionAmount}
                   onChange={handleTransactionAmountChange}
                 />
+                {!isTransactionAmountValid && (
+                    <p className="text-sm text-red-500 mt-1">
+                      Please enter a valid transaction amount.
+                    </p>
+                  )}
               </div>
               <div className="mt-6 ml-80">
               <button
