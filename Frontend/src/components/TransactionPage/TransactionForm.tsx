@@ -18,9 +18,10 @@ interface Customer {
 const TransactionForm: React.FC = () => {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [transactionType, setTransactionType] = useState<string>('');
+  const [notification, setNotification] = useState('');
   const [transactionDesc, setTransactionDesc] = useState<string>('');
   const [transactionAmount, setTransactionAmount] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [isTransactionAmountValid, setTransactionAmountValid] = useState<boolean>(true);
 
   useEffect(() => {
@@ -29,15 +30,17 @@ const TransactionForm: React.FC = () => {
       const queueId = sessionStorage.getItem('queue_id');
       console.log(`${API_ENDPOINT}/customers/getByQueue/${queueId}`);
       try {
+        setLoading(true);
         const response = await axios.get<Customer>(
           `${API_ENDPOINT}/customers/getByQueue/${queueId}`
         );
 
         setCustomer(response.data);
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
+        setNotification('Account Successfully Registered!');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -79,17 +82,20 @@ const TransactionForm: React.FC = () => {
     };
 
     try {
+      setLoading(true);
       const response = await axios.post(
         `${API_ENDPOINT}/transaction/create`,
         transactionData
       );
       console.log(response.data);
-      //route back to teller
+      // Route back to teller
       window.location.href = '/teller';
       // Perform any additional actions or show success message
     } catch (error) {
       console.error(error);
       // Handle error response
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,11 +111,11 @@ const TransactionForm: React.FC = () => {
       }}
     >
       <div className="container flex justify-end">
-      <div
-        className="rounded-lg bg-gray-800 p-8 w-80 ml-60"
-        style={{ borderRadius: '40px', width: '55rem' , backgroundColor: '#2C2520', borderColor: '#CECECE'}}
-      >
-        <div className="flex items-center mb-8">
+        <div
+          className="rounded-lg bg-gray-800 p-8 w-80 ml-60"
+          style={{ borderRadius: '40px', width: '55rem', backgroundColor: '#2C2520', borderColor: '#CECECE' }}
+        >
+          <div className="flex items-center mb-8">
             <img
               src={'./src/assets/Bill.png'}
               alt="User Profile"
@@ -121,41 +127,22 @@ const TransactionForm: React.FC = () => {
               <p className="text-lg">lauren@gmail.com</p>
             </div>
           </div>
-            <p className="text-xl font-bold pl-6 mb-2">Full Name: {customer?.full_name}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Email: {customer?.email}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Phone Number: {customer?.phone_number}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Address: {customer?.address}</p>
-        <p className="text-xl font-bold pl-6 mb-2">City: {customer?.city}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Postal Code: {customer?.postal_code}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Bank Account ID: {customer?.bank_account_id}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Queue Number: {customer?.queue_id}</p>
-      </div>
-      <div className="w-2/3">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            {/* {customer ? (
-              <div>
-                <h2>Customer Details</h2>
-                <p>Full Name: {customer.full_name}</p>
-                <p>Email: {customer.email}</p>
-                <p>Phone Number: {customer.phone_number}</p>
-                <p>Address: {customer.address}</p>
-                <p>City: {customer.city}</p>
-                <p>Postal Code: {customer.postal_code}</p>
-                <p>Bank Account ID: {customer.bank_account_id}</p>
-                <p>Queue Number: {customer.queue_id}</p>
-              </div>
-            ) : (
-              <p>No customer found.</p>
-            )} */}
-            <div className="mb-1 ml-40">
+          <p className="text-xl font-bold pl-6 mb-2">Full Name: {customer?.full_name}</p>
+          <p className="text-xl font-bold pl-6 mb-2">Email: {customer?.email}</p>
+          <p className="text-xl font-bold pl-6 mb-2">Phone Number: {customer?.phone_number}</p>
+          <p className="text-xl font-bold pl-6 mb-2">Address: {customer?.address}</p>
+          <p className="text-xl font-bold pl-6 mb-2">City: {customer?.city}</p>
+          <p className="text-xl font-bold pl-6 mb-2">Postal Code: {customer?.postal_code}</p>
+          <p className="text-xl font-bold pl-6 mb-2">Bank Account ID: {customer?.bank_account_id}</p>
+          <p className="text-xl font-bold pl-6 mb-2">Queue Number: {customer?.queue_id}</p>
+        </div>
+        <div className="w-2/3">
+          <div className="mb-1 ml-40">
             <h2 className="text-4xl font-semibold mb-8">
-            Transaction Form
+              Transaction Form
             </h2>
-            </div>
-            <div className="w-4/4">
+          </div>
+          <div className="w-4/4">
             <form onSubmit={handleTransactionSubmit}>
               <div className="mt-4 mb-1 ml-40">
                 <label className="block text-xl font-regular" htmlFor="transactionType">
@@ -163,6 +150,7 @@ const TransactionForm: React.FC = () => {
                 </label>
                 <select
                   id="transactionType"
+                  required
                   className="input input-bordered w-full"
                   style={{ backgroundColor: '#2C2520', borderColor: '#CECECE' }}
                   value={transactionType}
@@ -180,6 +168,7 @@ const TransactionForm: React.FC = () => {
                 <input
                   id="transactionDesc"
                   type="text"
+                  required
                   className="input input-bordered w-full h-40"
                   style={{ backgroundColor: '#2C2520', borderColor: '#CECECE' }}
                   value={transactionDesc}
@@ -194,34 +183,76 @@ const TransactionForm: React.FC = () => {
                   id="transactionAmount"
                   type="text"
                   className="input input-bordered w-full"
+                  required
                   style={{ backgroundColor: '#2C2520', borderColor: '#CECECE' }}
                   value={transactionAmount}
                   onChange={handleTransactionAmountChange}
                 />
                 {!isTransactionAmountValid && (
-                    <p className="text-sm text-red-500 mt-1">
-                      Please enter a valid transaction amount.
-                    </p>
-                  )}
+                  <p className="text-sm text-red-500 mt-1">
+                    Please enter a valid transaction amount.
+                  </p>
+                )}
               </div>
-              <div className="mt-6 ml-80">
               <button
                 type="submit"
                 className="btn btn-primary"
                 style={{ float: 'right', backgroundColor: '#FA9021' }}
+                disabled={isLoading}
               >
-                Submit
+                {isLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin mr-2 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647zM20 12a8 8 0 01-8 8v-4a4 4 0 004-4h4zm-2-5.291A7.962 7.962 0 0120 12h4c0-3.042-1.135-5.824-3-7.938l-3 2.647z"
+                      ></path>
+                    </svg>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit'
+                )}
               </button>
-              </div>
+              {notification && (
+                <div className="mt-4 text-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 mx-auto"
+                    fill="#2F855A"
+                    viewBox="0 0 24 24"
+                    stroke="#FFF"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <p className="text-green-900">{notification}</p>
+                </div>
+              )}
             </form>
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-  
 };
 
 export default TransactionForm;
