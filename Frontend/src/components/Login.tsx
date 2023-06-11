@@ -34,11 +34,11 @@ function Login() {
           window.location.href = '/';
         }
         if (typeId === 1) {
-          window.location.href = '/admin';
+          window.location.href = '/dashboard';
         } else if (typeId === 2) {
           window.location.href = '/DeskChoose';
         } else if (typeId === 3) {
-          window.location.href = '/frontdesk';
+          window.location.href = '/customer';
         } else {
           setErrorMessage('Invalid Type Id');
           setTimeout(() => {
@@ -60,7 +60,7 @@ function Login() {
 
   return (
     <>
-      <div>
+      <div className="flex justify-center items-center h-screen">
         {isLoading && (
           <div className="text-center">
             <div role="status">
@@ -138,24 +138,9 @@ function Login() {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Number</span>
-              </label>
-              <input
-                type="number"
-                placeholder="Enter a number"
-                className="input input-bordered w-full max-w-xs"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-              />
-            </div>
             <div className="card-actions">
               <button className="btn btn-primary" onClick={handleLogin}>
                 Login
-              </button>
-              <button className="btn btn-primary" onClick={handleSoundButton}>
-                Play Sound
               </button>
             </div>
           </div>

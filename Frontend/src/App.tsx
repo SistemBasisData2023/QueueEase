@@ -7,6 +7,7 @@ import DeskChoosePage from './pages/DeskChoosePage';
 import DashboardPage from './pages/Dashboard';
 import TransactionFormPage from './pages/TransactionFormPage';
 import CustomerFormPage from './pages/customerFormPage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path="/customer" element={<CustomerFormPage />} />
         <Route path="/Teller" element={<TellerPage />} />
         <Route path="/transaction" element={<TransactionFormPage />} />
-        <Route path="/dashboard/*" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

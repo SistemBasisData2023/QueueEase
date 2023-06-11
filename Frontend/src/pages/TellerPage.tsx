@@ -1,47 +1,49 @@
 import React, { useState, useEffect } from 'react';
+import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { API_ENDPOINT } from '../config/config';
+import { io } from 'socket.io-client';
+import { handlePlaySound } from '../utils/audioUtils';
 
-interface Queue {
+const socket = io(API_ENDPOINT);
+
+interface WaitingQueueItem {
   queue_id: number;
-  process_status: string;
   full_name: string;
 }
-//create documentation for tellerpage
-/**
- *
- * @returns
- */
 
 function TellerPage() {
-  const [tellerFullName, setTellerFullName] = useState('');
-  const [queues, setQueues] = useState<Queue[]>([]);
+  const [waitingQueue, setWaitingQueue] = useState<WaitingQueueItem[]>([]);
 
   useEffect(() => {
-    // Get the teller full name from sessionStorage
-    const fullName = sessionStorage.getItem('full_name');
-    setTellerFullName(fullName || '');
+    socket.on('queueUpdated', () => {
+      console.log('queueUpdated');
+      fetchData();
+    });
 
-    // Fetch all queues from localhost:5000/queue/getAll
-    fetchQueues();
+    socket.on('take', (desk_id, queueIdToUpdate) => {
+      const int_desk = parseInt(desk_id);
+      console.log('take', desk_id);
+      console.log('take', queueIdToUpdate);
+      handlePlaySound(queueIdToUpdate, int_desk);
+      fetchData();
+    });
 
-    // Set an interval to fetch queues every 3 seconds
-    const interval = setInterval(fetchQueues, 3000);
+    const fetchData = async () => {
+      try {
+        const response2 = await axios.get(
+          `${API_ENDPOINT}/queue/getWaitingQueue`
+        );
+        console.log(response2.data);
 
-    // Cleanup the interval when the component unmounts
-    return () => clearInterval(interval);
+        setWaitingQueue(response2.data);
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
-
-  const fetchQueues = () => {
-    axios
-      .get<Queue[]>(`${API_ENDPOINT}/queue/getAll`)
-      .then((response) => {
-        setQueues(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching queues:', error);
-      });
-  };
 
   const takeQueue = () => {
     // Get the teller ID and desk ID from sessionStorage
@@ -89,33 +91,106 @@ function TellerPage() {
         console.error('Error checking out', error);
       });
   };
-
   return (
-    <div className="p-4">
-      <h1 className="text-2xl mb-4">Daisy UI Page</h1>
-      <p>Welcome, {tellerFullName}</p>
-      <button className="btn btn-primary ml-2" onClick={() => takeQueue()}>
-        Take Queue
-      </button>
-      <div className="my-4">
-        <h2 className="text-lg font-medium mb-2">Queues</h2>
-        {queues.length > 0 ? (
-          <ul>
-            {queues.map((queue) => (
-              <li key={queue.queue_id} className="mb-2">
-                <span className="font-medium">{queue.full_name}</span> -{' '}
-                {queue.process_status}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No queues available.</p>
-        )}
+    <>
+      <div className="flex">
+        <div className="sticky top-0 h-screen w-64 bg-purple-new ">
+          <div className="grid grid-rows-8  h-screen">
+            <a className="row-start-1 row-span-1 mt-5">
+              <div className="flex justify-center items-center">
+                <img
+                  src="src\assets\Logo.svg"
+                  className="h-8 mr-3"
+                  alt="QueueEase Logo"
+                />
+              </div>
+            </a>
+            <div className="row-span-1">
+              <div className="flex justify-center items-center px-5">
+                <button
+                  className="btn-outline btn-block "
+                  onClick={() => takeQueue()}
+                >
+                  Take Queue
+                </button>
+              </div>
+            </div>
+
+            <div className="row-span-3"></div>
+            <div className="row-span-1 row-end-auto">
+              <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center">
+                  <img
+                    src="src\assets\Profile.png"
+                    className="h-16 w-16 mr-4 mb-5"
+                    alt="Profile"
+                    style={{ alignSelf: 'center', marginBottom: '5px' }}
+                  />
+                  <div>
+                    {sessionStorage.getItem('full_name')}
+                    <br />
+                    <span
+                      className=" badge badge-outline hover:badge-error badge-sm p-3"
+                      onClick={() => logout()}
+                    >
+                      Log Out
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-grow bg-base-300">
+          <div className="p-10 grid grid-cols-3 grid-flow-row gap-6">
+            <div className="col-span-2 h-screen">
+              <h1 className="text-3xl font-bold">Queue</h1>
+              <div className="mt-7 flex">
+                <div className="overflow-x-auto max-h-screen ">
+                  <table className="table">
+                    {/* head */}
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>No Antrian</th>
+                        <th>Full Name</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {waitingQueue.map((item, index) => (
+                        <tr key={item.queue_id} className="hover">
+                          <th>{index + 1}</th>
+                          <td>A{item.queue_id}</td>
+                          <td>
+                            {item.full_name}
+                            <br />
+                            <span className="badge badge-ghost badge-sm">
+                              Teller Customer
+                            </span>
+                          </td>
+                          <td>
+                            <span className="badge badge-accent">
+                              {' '}
+                              In_Queue
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-1 h-screen">
+              <h1 className="text-3xl font-bold">
+                Desk {sessionStorage.getItem('desk_no')}
+              </h1>
+            </div>
+          </div>
+        </div>
       </div>
-      <button className="btn btn-primary ml-2" onClick={() => logout()}>
-        Logout
-      </button>
-    </div>
+    </>
   );
 }
 
