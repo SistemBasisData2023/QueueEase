@@ -21,7 +21,8 @@ const TransactionForm: React.FC = () => {
   const [transactionDesc, setTransactionDesc] = useState<string>('');
   const [transactionAmount, setTransactionAmount] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isTransactionAmountValid, setTransactionAmountValid] = useState<boolean>(true);
+  const [isTransactionAmountValid, setTransactionAmountValid] =
+    useState<boolean>(true);
 
   useEffect(() => {
     // Fetch customer data from the API
@@ -105,11 +106,16 @@ const TransactionForm: React.FC = () => {
       }}
     >
       <div className="container flex justify-end">
-      <div
-        className="rounded-lg bg-gray-800 p-8 w-80 ml-60"
-        style={{ borderRadius: '40px', width: '55rem' , backgroundColor: '#2C2520', borderColor: '#CECECE'}}
-      >
-        <div className="flex items-center mb-8">
+        <div
+          className="rounded-lg bg-gray-800 p-8 w-80 ml-60"
+          style={{
+            borderRadius: '40px',
+            width: '55rem',
+            backgroundColor: '#2C2520',
+            borderColor: '#CECECE',
+          }}
+        >
+          <div className="flex items-center mb-8">
             <img
               src={'./src/assets/Bill.png'}
               alt="User Profile"
@@ -121,21 +127,35 @@ const TransactionForm: React.FC = () => {
               <p className="text-lg">lauren@gmail.com</p>
             </div>
           </div>
-            <p className="text-xl font-bold pl-6 mb-2">Full Name: {customer?.full_name}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Email: {customer?.email}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Phone Number: {customer?.phone_number}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Address: {customer?.address}</p>
-        <p className="text-xl font-bold pl-6 mb-2">City: {customer?.city}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Postal Code: {customer?.postal_code}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Bank Account ID: {customer?.bank_account_id}</p>
-        <p className="text-xl font-bold pl-6 mb-2">Queue Number: {customer?.queue_id}</p>
-      </div>
-      <div className="w-2/3">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            {/* {customer ? (
+          <p className="text-xl font-bold pl-6 mb-2">
+            Full Name: {customer?.full_name}
+          </p>
+          <p className="text-xl font-bold pl-6 mb-2">
+            Email: {customer?.email}
+          </p>
+          <p className="text-xl font-bold pl-6 mb-2">
+            Phone Number: {customer?.phone_number}
+          </p>
+          <p className="text-xl font-bold pl-6 mb-2">
+            Address: {customer?.address}
+          </p>
+          <p className="text-xl font-bold pl-6 mb-2">City: {customer?.city}</p>
+          <p className="text-xl font-bold pl-6 mb-2">
+            Postal Code: {customer?.postal_code}
+          </p>
+          <p className="text-xl font-bold pl-6 mb-2">
+            Bank Account ID: {customer?.bank_account_id}
+          </p>
+          <p className="text-xl font-bold pl-6 mb-2">
+            Queue Number: {customer?.queue_id}
+          </p>
+        </div>
+        <div className="w-2/3">
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              {/* {customer ? (
               <div>
                 <h2>Customer Details</h2>
                 <p>Full Name: {customer.full_name}</p>
@@ -150,78 +170,95 @@ const TransactionForm: React.FC = () => {
             ) : (
               <p>No customer found.</p>
             )} */}
-            <div className="mb-1 ml-40">
-            <h2 className="text-4xl font-semibold mb-8">
-            Transaction Form
-            </h2>
-            </div>
-            <div className="w-4/4">
-            <form onSubmit={handleTransactionSubmit}>
-              <div className="mt-4 mb-1 ml-40">
-                <label className="block text-xl font-regular" htmlFor="transactionType">
-                  Transaction Type
-                </label>
-                <select
-                  id="transactionType"
-                  className="input input-bordered w-full"
-                  style={{ backgroundColor: '#2C2520', borderColor: '#CECECE' }}
-                  value={transactionType}
-                  onChange={handleTransactionTypeChange}
-                >
-                  <option value="">Select Type</option>
-                  <option value="1">Deposit</option>
-                  <option value="2">Withdraw</option>
-                </select>
+              <div className="mb-1 ml-40">
+                <h2 className="text-4xl font-semibold mb-8">
+                  Transaction Form
+                </h2>
               </div>
-              <div className="mt-4 mb-1 ml-40">
-                <label className="block text-xl font-regular" htmlFor="transactionDesc">
-                  Transaction Description
-                </label>
-                <input
-                  id="transactionDesc"
-                  type="text"
-                  className="input input-bordered w-full h-40"
-                  style={{ backgroundColor: '#2C2520', borderColor: '#CECECE' }}
-                  value={transactionDesc}
-                  onChange={handleTransactionDescChange}
-                />
+              <div className="w-4/4">
+                <form onSubmit={handleTransactionSubmit}>
+                  <div className="mt-4 mb-1 ml-40">
+                    <label
+                      className="block text-xl font-regular"
+                      htmlFor="transactionType"
+                    >
+                      Transaction Type
+                    </label>
+                    <select
+                      id="transactionType"
+                      className="input input-bordered w-full"
+                      style={{
+                        backgroundColor: '#2C2520',
+                        borderColor: '#CECECE',
+                      }}
+                      value={transactionType}
+                      onChange={handleTransactionTypeChange}
+                    >
+                      <option value="">Select Type</option>
+                      <option value="1">Deposit</option>
+                      <option value="2">Withdraw</option>
+                    </select>
+                  </div>
+                  <div className="mt-4 mb-1 ml-40">
+                    <label
+                      className="block text-xl font-regular"
+                      htmlFor="transactionDesc"
+                    >
+                      Transaction Description
+                    </label>
+                    <input
+                      id="transactionDesc"
+                      type="text"
+                      className="input input-bordered w-full h-40"
+                      style={{
+                        backgroundColor: '#2C2520',
+                        borderColor: '#CECECE',
+                      }}
+                      value={transactionDesc}
+                      onChange={handleTransactionDescChange}
+                    />
+                  </div>
+                  <div className="mt-4 mb-1 ml-40">
+                    <label
+                      className="block text-xl font-regular"
+                      htmlFor="transactionAmount"
+                    >
+                      Transaction Amount
+                    </label>
+                    <input
+                      id="transactionAmount"
+                      type="text"
+                      className="input input-bordered w-full"
+                      style={{
+                        backgroundColor: '#2C2520',
+                        borderColor: '#CECECE',
+                      }}
+                      value={transactionAmount}
+                      onChange={handleTransactionAmountChange}
+                    />
+                    {!isTransactionAmountValid && (
+                      <p className="text-sm text-red-500 mt-1">
+                        Please enter a valid transaction amount.
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-6 ml-80">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{ float: 'right', backgroundColor: '#FA9021' }}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div className="mt-4 mb-1 ml-40">
-                <label className="block text-xl font-regular" htmlFor="transactionAmount">
-                  Transaction Amount
-                </label>
-                <input
-                  id="transactionAmount"
-                  type="text"
-                  className="input input-bordered w-full"
-                  style={{ backgroundColor: '#2C2520', borderColor: '#CECECE' }}
-                  value={transactionAmount}
-                  onChange={handleTransactionAmountChange}
-                />
-                {!isTransactionAmountValid && (
-                    <p className="text-sm text-red-500 mt-1">
-                      Please enter a valid transaction amount.
-                    </p>
-                  )}
-              </div>
-              <div className="mt-6 ml-80">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{ float: 'right', backgroundColor: '#FA9021' }}
-              >
-                Submit
-              </button>
-              </div>
-            </form>
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
-  
 };
 
 export default TransactionForm;
