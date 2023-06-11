@@ -19,9 +19,15 @@ function Table() {
               <td>Cy Ganderton</td>
               <td>
                 <select className="form-select">
-                  <option value="in-queue" className="bg-red-500 text-white">In Queue</option>
-                  <option value="processing" className="bg-blue-500 text-white">Processing</option>
-                  <option value="finished" className="bg-green-500 text-white">Finished</option>
+                  <option value="in-queue" className="bg-red-500 text-white">
+                    In Queue
+                  </option>
+                  <option value="processing" className="bg-blue-500 text-white">
+                    Processing
+                  </option>
+                  <option value="finished" className="bg-green-500 text-white">
+                    Finished
+                  </option>
                 </select>
               </td>
               <td>Tarik Tunai</td>
@@ -31,9 +37,15 @@ function Table() {
               <td>Hart Hagerty</td>
               <td>
                 <select className="form-select">
-                  <option value="in-queue" className="bg-red-500 text-white">In Queue</option>
-                  <option value="processing" className="bg-blue-500 text-white">Processing</option>
-                  <option value="finished" className="bg-green-500 text-white">Finished</option>
+                  <option value="in-queue" className="bg-red-500 text-white">
+                    In Queue
+                  </option>
+                  <option value="processing" className="bg-blue-500 text-white">
+                    Processing
+                  </option>
+                  <option value="finished" className="bg-green-500 text-white">
+                    Finished
+                  </option>
                 </select>
               </td>
               <td>Transfer</td>
@@ -43,9 +55,15 @@ function Table() {
               <td>Brice Swyre</td>
               <td>
                 <select className="form-select">
-                  <option value="in-queue" className="bg-red-500 text-white">In Queue</option>
-                  <option value="processing" className="bg-blue-500 text-white">Processing</option>
-                  <option value="finished" className="bg-green-500 text-white">Finished</option>
+                  <option value="in-queue" className="bg-red-500 text-white">
+                    In Queue
+                  </option>
+                  <option value="processing" className="bg-blue-500 text-white">
+                    Processing
+                  </option>
+                  <option value="finished" className="bg-green-500 text-white">
+                    Finished
+                  </option>
                 </select>
               </td>
               <td>Deposit</td>
