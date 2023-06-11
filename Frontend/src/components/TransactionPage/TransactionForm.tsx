@@ -66,7 +66,7 @@ const TransactionForm: React.FC = () => {
     event.preventDefault();
 
     const transactionData = {
-      customer_id: customer!.customer_id,
+      customer_id: customer?.customer_id,
       teller_id: sessionStorage.getItem('account_id'),
       trans_type_id: transactionType,
       trans_desc: transactionDesc,
@@ -114,17 +114,21 @@ const TransactionForm: React.FC = () => {
               className="mr-4"
               style={{ width: '100px', height: '100px', borderRadius: '50%' }}
             />
-            <div>
-              <h2>Customer Details</h2>
-              <p>Full Name: {customer.full_name}</p>
-              <p>Email: {customer.email}</p>
-              <p>Phone Number: {customer.phone_number}</p>
-              <p>Address: {customer.address}</p>
-              <p>City: {customer.city}</p>
-              <p>Postal Code: {customer.postal_code}</p>
-              <p>Bank Account ID: {customer.bank_account_id}</p>
-              <p>Queue Number: {customer.queue_id}</p>
-            </div>
+            {customer ? (
+              <div>
+                <h2>Customer Details</h2>
+                <p>Full Name: {customer.full_name}</p>
+                <p>Email: {customer.email}</p>
+                <p>Phone Number: {customer.phone_number}</p>
+                <p>Address: {customer.address}</p>
+                <p>City: {customer.city}</p>
+                <p>Postal Code: {customer.postal_code}</p>
+                <p>Bank Account ID: {customer.bank_account_id}</p>
+                <p>Queue Number: {customer.queue_id}</p>
+              </div>
+            ) : (
+              <div> No Customer</div>
+            )}
           </div>
           <p className="text-xl font-bold pl-6 mb-2">
             Full Name: {customer?.full_name}
