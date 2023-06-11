@@ -3,16 +3,30 @@ const router = express.Router();
 
 const queueController = require('../controllers/queueControllers');
 
-router.post('/add', queueController.createQueue);
+module.exports = function (io) {
+  router.post('/add', queueController.createQueue);
 
-router.get('/getAll', queueController.getAllQueues);
+  router.get('/getAll', (req, res) => {
+    queueController.getAllQueues(req, res, io);
+  });
 
-router.get('/get/:id', queueController.getQueueById);
+  router.get('/get/:id', queueController.getQueueById);
 
-router.put('/take', queueController.takeQueueById);
+  router.put('/take', (req, res) => {
+    queueController.takeQueueById(req, res, io);
+  });
 
-router.put('/finish/:id', queueController.finishQueueById);
+  router.put('/finish/:id', queueController.finishQueueById);
 
-router.get('/getByTeller', queueController.getQueueByTeller);
+  router.get('/getWaitingQueue', queueController.getWaitingQueue);
 
-module.exports = router;
+  router.get('/getByTeller', queueController.getQueueByTeller);
+
+  router.get('/reset', (req, res) => {
+    queueController.reset(req, res, io);
+  });
+
+ 
+
+  return router;
+};

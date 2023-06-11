@@ -56,7 +56,7 @@ const queueController = {
     }
   },
 
-  takeQueueById: async (req, res) => {
+  takeQueueById: async (req, res, io) => {
     try {
       const { teller_id, desk_id } = req.body;
 
@@ -85,7 +85,7 @@ const queueController = {
         `UPDATE Queue SET teller_id = $1, process_status = $2, desk_id = $3 WHERE queue_id = $4`,
         [teller_id, status.processing, desk_id, queueIdToUpdate]
       );
-
+      io.emit('take', desk_id, queueIdToUpdate);
       res.status(200).json({queue_id: queueIdToUpdate, message: 'Queue entry updated successfully' });
     } catch (error) {
       console.error('Error updating queue entry:', error);
@@ -137,6 +137,55 @@ const queueController = {
       res.status(500).json({ error: 'Internal server error' });
     }
     
+  },
+
+  getWaitingQueue : async (req, res) => {
+    try {
+      const { id } = req.params;
+      //create query to take all in queue with join from customer to get name
+      const getWaitingQueueQuery = `SELECT Queue.queue_id, Customer.full_name
+      FROM Queue
+      JOIN Customer ON Queue.customer_id = Customer.customer_id
+      WHERE Queue.process_status = 'IN QUEUE'`;
+
+      
+      const result = await pool.query(getWaitingQueueQuery);
+      const queue = result.rows;
+      res.status(200).json(queue);
+    } catch (error) {
+      console.error('Error getting queue by id', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  reset : async (req, res,io) => {
+    try {
+      // Query to fetch all queue info
+      const selectQuery = `
+        SELECT *
+        FROM queue
+      `;
+  
+      // Execute the select query
+      const selectResult = await pool.query(selectQuery);
+  
+      // Get the fetched queue info
+      const queueInfo = selectResult.rows;
+  
+      // Query to truncate the table
+      const truncateQuery = `
+        TRUNCATE TABLE queue RESTART IDENTITY;
+      `;
+  
+      // Execute the truncate query
+      await pool.query(truncateQuery);
+      io.emit('queueUpdated');
+      // Send the fetched queue info as the response
+      res.status(200).json(queueInfo);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
   
 

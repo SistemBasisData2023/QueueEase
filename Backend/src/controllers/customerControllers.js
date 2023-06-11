@@ -1,8 +1,9 @@
 const { pool } = require('../config/config');
 const { v4: uuidv4 } = require('uuid');
+const status = require('../utils/status');
 
 const customerController = {
-  createCustomer: async (req, res) => {
+  createCustomer: async (req, res,io) => {
     try {
       const {
         full_name,
@@ -46,7 +47,22 @@ const customerController = {
         createCustomerValues
       );
       const newCustomerId = result.rows[0].customer_id;
+      
+      const createQueueQuery = `
+      INSERT INTO Queue (
+          customer_id,
+          process_status
+      )
+      VALUES ($1, $2)
+      RETURNING queue_id
+      `;
 
+      const process_status = status.in_queue;
+      const createQueueValues = [customer_id, process_status];
+
+      const result2 = await pool.query(createQueueQuery, createQueueValues);
+
+      io.emit('queueUpdated');
       res.status(201).json({ customer_id: newCustomerId });
     } catch (error) {
       console.error('Error creating customer', error);

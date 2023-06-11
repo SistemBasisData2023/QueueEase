@@ -3,21 +3,22 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const customerController = require('../controllers/customerControllers');
 
-// Create a new customer
-router.post('/add', customerController.createCustomer);
 
-// Get all customers
-router.get('/getAll', auth, customerController.getAllCustomers);
+module.exports = function (io) {
+    router.post('/add', (req, res) => {
+        customerController.createCustomer(req, res, io);
+    });
+    
+    router.get('/getAll',customerController.getAllCustomers);
+    
+    router.get('/get/:id', customerController.getCustomerById);
+    
+    router.put('/update/:id', customerController.updateCustomerById);
+    
+    router.delete('/delete/:id', customerController.deleteCustomerById);
+    
+    router.get('/getByQueue/:id', customerController.getCustomerByQueueId);
+    
+    return router;
+}
 
-// Get a customer by ID
-router.get('/get/:id', customerController.getCustomerById);
-
-// Update a customer by ID
-router.put('/update/:id', customerController.updateCustomerById);
-
-// Delete a customer by ID
-router.delete('/delete/:id', customerController.deleteCustomerById);
-
-router.get('/getByQueue/:id', customerController.getCustomerByQueueId);
-
-module.exports = router;

@@ -125,6 +125,33 @@ const tellerDeskController = {
       res.status(500).json({ error: 'Internal server error' });
     }
   },
+
+  getTellerInfo: async (req, res) => {
+    try {
+      // Query to fetch teller info
+      const query = `
+        SELECT
+          a.account_id AS teller_id,
+          a.full_name AS Nama,
+          a.email,
+          SUM(d.duration) AS "total_duration"
+        FROM account a
+        LEFT JOIN teller_desk d ON a.account_id = d.teller_id
+        LEFT JOIN transaction t ON a.account_id = t.teller_id
+        WHERE a.type_id = 2
+        GROUP BY a.account_id
+      `;
+  
+      // Execute the query
+      const result = await pool.query(query);
+  
+      // Send the fetched data as the response
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
 };
 
 module.exports = tellerDeskController;

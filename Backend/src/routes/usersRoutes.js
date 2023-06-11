@@ -18,4 +18,6 @@ router.put('/update/:id', usersController.updateUserById);
 // // Route to delete user by ID
 router.delete('/delete/:id', usersController.deleteUserById);
 
+router.post('/verifyUser', usersController.verify);
+
 module.exports = router;
