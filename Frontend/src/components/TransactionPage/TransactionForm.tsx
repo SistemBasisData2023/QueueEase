@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../Global/Loading';
-import { API_ENDPOINT } from '../../config/config';
 
 interface Customer {
   queue_id: number;
@@ -28,10 +27,10 @@ const TransactionForm: React.FC = () => {
     // Fetch customer data from the API
     const fetchCustomerData = async () => {
       const queueId = sessionStorage.getItem('queue_id');
-      console.log(`${API_ENDPOINT}/customers/getByQueue/${queueId}`);
+      console.log(`http://localhost:5000/customers/getByQueue/${queueId}`);
       try {
         const response = await axios.get<Customer>(
-          `${API_ENDPOINT}/customers/getByQueue/${queueId}`
+          `http://localhost:5000/customers/getByQueue/${queueId}`
         );
 
         setCustomer(response.data);
@@ -60,12 +59,7 @@ const TransactionForm: React.FC = () => {
   const handleTransactionAmountChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const regexPattern = /^\d+(\.\d{1,2})?$/;
-    const value = event.target.value;
-    const isValid = regexPattern.test(value) || value === '';
-
-    setTransactionAmount(value);
-    setTransactionAmountValid(isValid);
+    setTransactionAmount(event.target.value);
   };
 
   const handleTransactionSubmit = async (event: React.FormEvent) => {
@@ -81,12 +75,10 @@ const TransactionForm: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `${API_ENDPOINT}/transaction/create`,
+        'http://localhost:5000/transaction/create',
         transactionData
       );
       console.log(response.data);
-      //route back to teller
-      window.location.href = '/teller';
       // Perform any additional actions or show success message
     } catch (error) {
       console.error(error);
@@ -123,8 +115,15 @@ const TransactionForm: React.FC = () => {
               style={{ width: '100px', height: '100px', borderRadius: '50%' }}
             />
             <div>
-              <h2 className="text-3xl font-bold mb-1">Lurenz</h2>
-              <p className="text-lg">lauren@gmail.com</p>
+              <h2>Customer Details</h2>
+              <p>Full Name: {customer.full_name}</p>
+              <p>Email: {customer.email}</p>
+              <p>Phone Number: {customer.phone_number}</p>
+              <p>Address: {customer.address}</p>
+              <p>City: {customer.city}</p>
+              <p>Postal Code: {customer.postal_code}</p>
+              <p>Bank Account ID: {customer.bank_account_id}</p>
+              <p>Queue Number: {customer.queue_id}</p>
             </div>
           </div>
           <p className="text-xl font-bold pl-6 mb-2">
