@@ -38,6 +38,7 @@ function Sidebar() {
               e.target.style.backgroundColor = 'transparent';
               e.target.style.border = 'none';
             }}
+            onClick={() => (window.location.href = '/register')}
           >
             <img
               src="src\assets\icon-park-solid_add.png"
